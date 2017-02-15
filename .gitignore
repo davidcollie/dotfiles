@@ -1,0 +1,44 @@
+# non-dot files
+/[^.]*
+!/bin
+
+autoload
+plugged
+session
+
+# secrets
+/.aws
+/.ssh
+/.tunnelss
+/.pia*
+/.github
+
+# junk
+/.CFUserTextEncoding
+/.DS_Store
+/.Trash
+/.MacOSX
+/.cache
+/.rvm
+/.npm
+/.gem
+/.skipbuddy
+/.cups
+/.gsutil
+/.docker-sync-global.yml
+/.babel.json
+/.account
+/.lesshst
+/.local
+/.rnd
+/.anyconnect
+/.mkshrc
+
+# configs
+/.config/mpv
+
+# history
+/.bash_history
+/.rediscli_history
+/.viminfo
+/.python_history
