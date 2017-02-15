@@ -38,6 +38,7 @@ session
 /.config/mpv
 
 # history
+.netrwhist
 /.bash_history
 /.rediscli_history
 /.viminfo
