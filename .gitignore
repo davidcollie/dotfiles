@@ -36,6 +36,8 @@ session
 
 # configs
 /.config/mpv
+/.config/configstore
+/.nvm
 
 # history
 .netrwhist
