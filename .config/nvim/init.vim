@@ -41,14 +41,14 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "" Javascript completion
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 "" Color
-Plug 'freeo/vim-kalisi'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
 
 "" Javascript Bundle
 Plug 'pangloss/vim-javascript'
 Plug 'elzr/vim-json'
+Plug 'posva/vim-vue'
 
 "" Ruby Bundle
 Plug 'vim-ruby/vim-ruby'
@@ -70,6 +70,21 @@ filetype plugin indent on
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************"
+" auto change windows present working directory to file being edited
+autocmd BufEnter * silent! lcd %:p:h
+
+highlight ColorColumn ctermbg=59 guibg=#333333
+let &colorcolumn=join(range(100,500),",")
+
+set listchars=tab:�\ ,nbsp:�,trail:�,extends:>,precedes:<
+set list
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+"turn on indenting
+set smartindent
+
 "" Encoding
 " set encoding=utf-8
 set fileencoding=utf-8
@@ -91,11 +106,17 @@ let mapleader=','
 "" Enable hidden buffers
 set hidden
 
+"no arrow function keys
+set noesckeys
+
+set nowrap
+
 "" Searching
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set showmatch " show matching brackets"
 
 "" Encoding
 set bomb
@@ -119,8 +140,9 @@ set number
 
 let no_buffers_menu=1
 
-colorscheme kalisi
+set termguicolors
 set background=dark
+colorscheme solarized
 
 set mousemodel=popup
 set t_Co=256
@@ -201,11 +223,6 @@ if filereadable(expand("~/.config/nvim/ruby.vim"))
   source ~/.config/nvim/ruby.vim
 endif
 
-"" Include user's local vim config
-if filereadable(expand("~/.config/nvim/local_init.vim"))
-  source ~/.config/nvim/local_init.vim
-endif
-
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
 if !exists('g:airline_symbols')
@@ -229,18 +246,6 @@ if !exists('g:airline_powerline_fonts')
   let g:airline_symbols.paste     = 'Þ'
   let g:airline_symbols.paste     = '∥'
   let g:airline_symbols.whitespace = 'Ξ'
-else
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
 endif
 
 " deoplete
