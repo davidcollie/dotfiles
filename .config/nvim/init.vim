@@ -23,12 +23,14 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-unimpaired'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
-Plug 'vim-scripts/grep.vim'
+" Plug 'mileszs/ack.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
 
@@ -39,8 +41,8 @@ Plug 'neomake/neomake'
 Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "" Javascript completion
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 
 "" Color
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
@@ -56,11 +58,6 @@ Plug 'vim-ruby/vim-ruby'
 "" HTML Bundle
 Plug 'hail2u/vim-css3-syntax'
 Plug 'gorodinskiy/vim-coloresque'
-
-"" Include user's extra bundle
-if filereadable(expand("~/.config/nvim/local_bundles.vim"))
-  source ~/.config/nvim/local_bundles.vim
-endif
 
 call plug#end()
 
@@ -86,6 +83,8 @@ set autoread
 set smartindent
 
 "" Encoding
+set bomb
+set binary
 " set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -106,9 +105,6 @@ let mapleader=','
 "" Enable hidden buffers
 set hidden
 
-"no arrow function keys
-set noesckeys
-
 set nowrap
 
 "" Searching
@@ -117,10 +113,6 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch " show matching brackets"
-
-"" Encoding
-set bomb
-set binary
 
 "" Directories for swp files
 set nobackup
@@ -188,11 +180,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
-" grep.vim
-let Grep_Default_Options = '-IR'
-let Grep_Skip_Files = '*.log *.db'
-let Grep_Skip_Dirs = '.git node_modules'
-
 "" make/cmake
 augroup vimrc-make-cmake
   autocmd!
@@ -215,9 +202,9 @@ if filereadable(expand("~/.config/nvim/python"))
   source ~/.config/nvim/python.vim
 endif
 
-if filereadable(expand("~/.config/nvim/javascript.vim"))
-  source ~/.config/nvim/javascript.vim
-endif
+" if filereadable(expand("~/.config/nvim/javascript.vim"))
+"   source ~/.config/nvim/javascript.vim
+" endif
 
 if filereadable(expand("~/.config/nvim/ruby.vim"))
   source ~/.config/nvim/ruby.vim

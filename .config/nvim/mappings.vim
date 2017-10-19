@@ -16,9 +16,6 @@ cnoreabbrev Qall qall
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-"" Grep
-nnoremap <silent> <leader>f :Rgrep<CR>
-
 "" Split
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
@@ -40,25 +37,6 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " tern
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
-
-"" ctrlp.vim
-set wildmode=list:longest,list:full
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/target/*,*/bin/*,*/lib_managed/*
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
-let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-let g:ctrlp_use_caching = 1
-
-" The Silver Searcher
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
 " Disable visualbell
 set noerrorbells visualbell t_vb=
@@ -88,3 +66,12 @@ noremap <C-h> <C-w>h
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
+
+" fzf.vim
+nmap <leader>b :Buffers<CR>
+nmap <leader>f :Files<CR>
+" nmap <Leader>t :Tags<CR>
+
+" ack.vim
+" nmap <M-k>    :Ack! "\b<cword>\b" <CR>
+" nmap <Esc>k   :Ack! "\b<cword>\b" <CR>

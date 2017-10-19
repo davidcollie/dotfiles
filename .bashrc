@@ -4,6 +4,9 @@ export NVM_DIR="$HOME/.nvm"
 
 export PS1="\W $ "
 
+# Setting ag as the default source for fzf
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
 set -o vi
 
 source /vidyard/DevTools/.vidyard_bashrc
