@@ -21,25 +21,23 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
+Plug 'machakann/vim-highlightedyank'  "highlight yanked text
+Plug 'tpope/vim-commentary'           "comment out blocks of code using gc action
+Plug 'tpope/vim-fugitive'             "git integration
 Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot'
-" Plug 'mileszs/ack.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'Yggdroot/indentLine'
+Plug 'junegunn/fzf.vim'               "fuzzy search files
+Plug 'itchyny/lightline.vim'          "lightweight status bar
+Plug 'sheerun/vim-polyglot'           "syntax highlighting
+Plug 'Raimondi/delimitMate'           "auto closing of quotes, braces, etc...
+Plug 'Yggdroot/indentLine'            "show vertical indentation lines
 
 "" Linting
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
+" Plug 'w0rp/ale' "ALE Asynchronous Linting Engine
 
 "" Completion
 Plug 'ervandew/supertab'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "" Javascript completion
 " Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
@@ -51,6 +49,9 @@ Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'pangloss/vim-javascript'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
+
+"" Scala Bundle
+Plug 'derekwyatt/vim-scala'
 
 "" Ruby Bundle
 Plug 'vim-ruby/vim-ruby'
@@ -68,12 +69,14 @@ filetype plugin indent on
 "" Basic Setup
 "*****************************************************************************"
 " auto change windows present working directory to file being edited
-autocmd BufEnter * silent! lcd %:p:h
+" autocmd BufEnter * silent! lcd %:p:h
+set autochdir
 
 highlight ColorColumn ctermbg=59 guibg=#333333
 let &colorcolumn=join(range(100,500),",")
 
-set listchars=tab:�\ ,nbsp:�,trail:�,extends:>,precedes:<
+set showbreak=↪\ 
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set list
 
 " Set to auto read when a file is changed from the outside
@@ -168,17 +171,16 @@ set titlestring=%F
 
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
-
-" vim-airline
-let g:airline_theme = 'powerlineish'
-let g:airline#extensions#syntastic#enabled = 0
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
 "" make/cmake
 augroup vimrc-make-cmake
@@ -198,69 +200,49 @@ if filereadable(expand("~/.config/nvim/mappings.vim"))
   source ~/.config/nvim/mappings.vim
 endif
 
-if filereadable(expand("~/.config/nvim/python"))
-  source ~/.config/nvim/python.vim
-endif
+" vim-python
+augroup vimrc-python
+  autocmd!
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
+      \ formatoptions+=croq softtabstop=4 smartindent
+      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+augroup END
 
-" if filereadable(expand("~/.config/nvim/javascript.vim"))
-"   source ~/.config/nvim/javascript.vim
-" endif
+" Javascript
+let g:javascript_enable_domhtmlcss = 1
 
-if filereadable(expand("~/.config/nvim/ruby.vim"))
-  source ~/.config/nvim/ruby.vim
-endif
-
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  let g:airline_left_sep          = '▶'
-  let g:airline_left_alt_sep      = '»'
-  let g:airline_right_sep         = '◀'
-  let g:airline_right_alt_sep     = '«'
-  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-  let g:airline#extensions#readonly#symbol   = '⊘'
-  let g:airline#extensions#linecolumn#prefix = '¶'
-  let g:airline#extensions#paste#symbol      = 'ρ'
-  let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.branch    = '⎇'
-  let g:airline_symbols.paste     = 'ρ'
-  let g:airline_symbols.paste     = 'Þ'
-  let g:airline_symbols.paste     = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
-endif
+" Ruby
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
 
 " deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
-\]
-let g:deoplete#ignore_sources = {}
-let g:deoplete#ignore_sources.ruby = ['omni']
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#omni#functions = {}
+" let g:deoplete#omni#functions.javascript = [
+"   \ 'tern#Complete',
+" \]
+" let g:deoplete#ignore_sources = {}
+" let g:deoplete#ignore_sources.ruby = ['omni']
 
-set completeopt=longest,menuone,preview
-let g:deoplete#sources = {}
-let g:deoplete#sources['javascript.jsx'] = ['file', 'ternjs']
-let g:tern#command = ['tern']
-let g:tern#arguments = ['--persistent']
+" set completeopt=longest,menuone,preview
+" let g:deoplete#sources = {}
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ternjs']
+" let g:tern#command = ['tern']
+" let g:tern#arguments = ['--persistent']
 
 " Same as default except that I remove the 'u' option
-set complete=.,w,b,t
-let g:SuperTabDefaultCompletionType = "context"
-" close the preview window when you're not using it
-let g:SuperTabClosePreviewOnPopupClose = 1
+" set complete=.,w,b,t
+" let g:SuperTabDefaultCompletionType = "context"
+" " close the preview window when you're not using it
+" let g:SuperTabClosePreviewOnPopupClose = 1
+
 
 " neomake
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
 
-let g:neomake_javascript_jshint_maker = {
-      \ 'args': [],
-      \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-      \ }
-let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_javascript_jshint_maker = {
+"       \ 'args': [],
+"       \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+"       \ }
+" let g:neomake_javascript_enabled_makers = ['eslint']

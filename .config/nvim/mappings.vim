@@ -70,8 +70,6 @@ vmap > >gv
 " fzf.vim
 nmap <leader>b :Buffers<CR>
 nmap <leader>f :Files<CR>
+" nmap <leader>g :GFiles<CR>
 " nmap <Leader>t :Tags<CR>
-
-" ack.vim
-" nmap <M-k>    :Ack! "\b<cword>\b" <CR>
-" nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
+ nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
