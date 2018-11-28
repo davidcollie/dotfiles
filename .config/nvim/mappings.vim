@@ -33,11 +33,6 @@ noremap <Leader>gr :Gremove<CR>
 "" Opens an edit command with the path of the currently edited file filled in
 noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-" deoplete tab-complete
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-" tern
-autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
-
 " Disable visualbell
 set noerrorbells visualbell t_vb=
 if has('autocmd')
@@ -72,4 +67,3 @@ nmap <leader>b :Buffers<CR>
 nmap <leader>f :Files<CR>
 " nmap <leader>g :GFiles<CR>
 " nmap <Leader>t :Tags<CR>
- nmap <Esc>k   :Ack! "\b<cword>\b" <CR>

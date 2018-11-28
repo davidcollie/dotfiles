@@ -9,9 +9,7 @@ if !filereadable(vimplug_exists)
   echo ""
   silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   let g:not_finish_vimplug = "yes"
-
   " Run shell script if exist on custom select language
-
   autocmd VimEnter * PlugInstall
 endif
 
@@ -24,7 +22,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 Plug 'machakann/vim-highlightedyank'  "highlight yanked text
 Plug 'tpope/vim-commentary'           "comment out blocks of code using gc action
 Plug 'tpope/vim-fugitive'             "git integration
-Plug '/usr/local/opt/fzf'
+Plug '/usr/local/opt/fzf'             "fuzzy search files
 Plug 'junegunn/fzf.vim'               "fuzzy search files
 Plug 'itchyny/lightline.vim'          "lightweight status bar
 Plug 'sheerun/vim-polyglot'           "syntax highlighting
@@ -37,10 +35,6 @@ Plug 'Yggdroot/indentLine'            "show vertical indentation lines
 
 "" Completion
 Plug 'ervandew/supertab'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"" Javascript completion
-" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 
 "" Color
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
@@ -169,8 +163,6 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'active': {
@@ -215,34 +207,3 @@ let g:javascript_enable_domhtmlcss = 1
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
-
-" deoplete
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#omni#functions = {}
-" let g:deoplete#omni#functions.javascript = [
-"   \ 'tern#Complete',
-" \]
-" let g:deoplete#ignore_sources = {}
-" let g:deoplete#ignore_sources.ruby = ['omni']
-
-" set completeopt=longest,menuone,preview
-" let g:deoplete#sources = {}
-" let g:deoplete#sources['javascript.jsx'] = ['file', 'ternjs']
-" let g:tern#command = ['tern']
-" let g:tern#arguments = ['--persistent']
-
-" Same as default except that I remove the 'u' option
-" set complete=.,w,b,t
-" let g:SuperTabDefaultCompletionType = "context"
-" " close the preview window when you're not using it
-" let g:SuperTabClosePreviewOnPopupClose = 1
-
-
-" neomake
-" autocmd! BufWritePost * Neomake
-
-" let g:neomake_javascript_jshint_maker = {
-"       \ 'args': [],
-"       \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-"       \ }
-" let g:neomake_javascript_enabled_makers = ['eslint']
