@@ -29,10 +29,6 @@ Plug 'sheerun/vim-polyglot'           "syntax highlighting
 Plug 'Raimondi/delimitMate'           "auto closing of quotes, braces, etc...
 Plug 'Yggdroot/indentLine'            "show vertical indentation lines
 
-"" Linting
-" Plug 'neomake/neomake'
-" Plug 'w0rp/ale' "ALE Asynchronous Linting Engine
-
 "" Completion
 Plug 'ervandew/supertab'
 
@@ -43,12 +39,6 @@ Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'pangloss/vim-javascript'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
-
-"" Scala Bundle
-Plug 'derekwyatt/vim-scala'
-
-"" Ruby Bundle
-Plug 'vim-ruby/vim-ruby'
 
 "" HTML Bundle
 Plug 'hail2u/vim-css3-syntax'
@@ -202,8 +192,3 @@ augroup END
 
 " Javascript
 let g:javascript_enable_domhtmlcss = 1
-
-" Ruby
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
